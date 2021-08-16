@@ -23,7 +23,7 @@ function App() {
     const { value } = e.target;
     setSearchValue(value);
 
-    if (value.split(' ').length >= 2 && !isRequest) {
+    if (value.length >= 2 && !isRequest) {
       const filtredCharacters = await getFiltredCharacters(value);
       setCharacters(filtredCharacters);
       setRequest(true);
