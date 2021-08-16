@@ -1,25 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, ChangeEvent } from 'react';
+import ReactTooltip from 'react-tooltip';
+
+import { getCharacters, getFiltredCharacters } from 'services/characters';
+import { ICharacter } from 'interfaces/character';
+import { InputText } from 'components/input-text';
+import { CharacterCard } from 'components/character-card';
 
 function App() {
+  const [characters, setCharacters] = useState<ICharacter[]>([]);
+  const [serchValue, setSearchValue] = useState<string>('');
+  const [isRequest, setRequest] = useState<boolean>(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getCharacters;
+      setCharacters(data);
+    };
+    getData();
+  }, []);
+
+  const onChangeSeach = async (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearchValue(value);
+
+    if (value.split(' ').length >= 2 && !isRequest) {
+      const filtredCharacters = await getFiltredCharacters(value);
+      setCharacters(filtredCharacters);
+      setRequest(true);
+      setTimeout(() => { setRequest(false); }, 500);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <InputText value={serchValue} onChange={onChangeSeach} type="text" placeholder="Search..." />
       </header>
-    </div>
+      <main>
+        {characters.length
+          ? characters.map((character) => (
+            <CharacterCard key={character.id} character={character} />
+          ))
+          : <span>Загрузка...</span>}
+        <ReactTooltip id="info" />
+      </main>
+    </>
   );
 }
 
