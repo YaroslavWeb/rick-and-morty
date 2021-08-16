@@ -10,7 +10,7 @@ export const getCharacters = () => axios.get(charactersUrl)
     alert(e);
   });
 
-export const getFilteredCharacters = async (value: string) => axios.get(filteredCharactersUrl + value )
+export const getFilteredCharacters = async (value: string) => axios.get(filteredCharactersUrl + encodeURIComponent(value) )
   .then((res) => {
     const characters = res.data.results || [];
     return characters;
