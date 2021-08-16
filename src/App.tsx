@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getCharacters;
+      const data = await getCharacters();
       setCharacters(data);
       setRequest(false);
     };
@@ -33,9 +33,9 @@ function App() {
       const data = await getFilteredCharacters(value);
       afterRequest(data)
     }
-    
+
     if(!value.length && !isRequest){
-      const data = await getCharacters;
+      const data = await getCharacters();
       afterRequest(data)
     }
   };

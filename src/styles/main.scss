@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
 }
 
 code {
@@ -35,4 +36,5 @@ ul {
   display: flex;
   justify-content: center;
   margin-bottom: 64px;
+  min-height: 24px;
 }
