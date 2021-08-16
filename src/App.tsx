@@ -1,14 +1,13 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import ReactTooltip from 'react-tooltip';
 
-import { getCharacters, getFiltredCharacters } from 'services/characters';
+import { getCharacters, getFilteredCharacters } from 'services/characters';
 import { ICharacter } from 'interfaces/character';
 import { InputText } from 'components/input-text';
 import { CharacterCard } from 'components/character-card';
 
 function App() {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
-  const [serchValue, setSearchValue] = useState<string>('');
+  const [searchValue, setSearchValue] = useState<string>('');
   const [isRequest, setRequest] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ function App() {
     setSearchValue(value);
 
     if (value.length >= 2 && !isRequest) {
-      const filtredCharacters = await getFiltredCharacters(value);
+      const filtredCharacters = await getFilteredCharacters(value);
       setCharacters(filtredCharacters);
       setRequest(true);
       setTimeout(() => { setRequest(false); }, 500);
@@ -34,7 +33,7 @@ function App() {
   return (
     <>
       <header>
-        <InputText value={serchValue} onChange={onChangeSeach} type="text" placeholder="Search..." />
+        <InputText value={searchValue} onChange={onChangeSeach} type="text" placeholder="Search..." />
       </header>
       <main>
         {characters.length
@@ -42,7 +41,6 @@ function App() {
             <CharacterCard key={character.id} character={character} />
           ))
           : <span>Загрузка...</span>}
-      <ReactTooltip />
       </main>
     </>
   );
