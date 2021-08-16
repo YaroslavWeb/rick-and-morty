@@ -6,7 +6,7 @@ interface CharacterCardProps {
 }
 
 export const CharacterCard = ({ character }: CharacterCardProps) => (
-  <div className="character-card" data-tip="name:{character.name}" data-id="info">
+  <div data-tip="name" className="character-card">
     <img src={character.image} alt="avatar" />
   </div>
 );

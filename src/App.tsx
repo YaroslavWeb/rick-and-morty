@@ -42,7 +42,7 @@ function App() {
             <CharacterCard key={character.id} character={character} />
           ))
           : <span>Загрузка...</span>}
-        <ReactTooltip id="info" />
+      <ReactTooltip />
       </main>
     </>
   );
